@@ -139,12 +139,30 @@ header {
   position: sticky;
   top: 0;
   z-index: 100;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .logo {
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #EB6100;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  flex: 1;
+  max-width: 200px;
+}
+
+.logo img {
+  height: 40px;
+  margin-right: 10px;
+}
+
+/* 로고 텍스트 제거 */
+
+nav {
+  flex: 2;
+  display: flex;
+  justify-content: center;
 }
 
 nav ul {
@@ -191,6 +209,8 @@ nav ul li a.active::after {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  flex: 1;
+  max-width: 200px;
 }
 
 .user-info #userName {
