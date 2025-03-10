@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>번역 감수 - 음성 파일 자막 편집 사이트</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+  <header>
+    <div class="logo">음성 파일 자막 편집 사이트</div>
+    <nav>
+      <ul>
+        <li><a href="dashboard.html">대시보드</a></li>
+        <li><a href="projects.html">프로젝트</a></li>
+        <li id="adminMenu" style="display: none;"><a href="admin.html">관리자</a></li>
+        <li><a href="#" id="logoutBtn">로그아웃</a></li>
+      </ul>
+    </nav>
+    <div class="user-info">
+      <span id="userName">사용자</span>
+      <span id="userRole">일반 감수자</span>
+    </div>
+  </header>
+  
+  <main>
+    <div class="work-container">
+      <div class="work-header">
+        <h1 id="projectTitle">프로젝트 제목</h1>
+        <div class="project-status">
+          <span id="projectStatus">번역 감수 중</span>
+        </div>
+      </div>
+      
+      <div class="work-area">
+        <div class="transcription-container">
+          <h2>번역 API 결과 (원본)</h2>
+          <div id="originalTranslation" class="transcription-area">
+            <!-- 번역 API 결과가 JS에 의해 동적으로 로드됩니다 -->
+          </div>
+        </div>
+        
+        <div class="editing-container">
+          <h2>번역 감수 영역</h2>
+          <div id="editableTranslation" class="transcription-area" contenteditable="true">
+            <!-- 편집 가능한 영역이 JS에 의해 동적으로 로드됩니다 -->
+          </div>
+        </div>
+      </div>
+      
+      <div class="action-buttons">
+        <button id="saveBtn" class="btn">저장</button>
+        <button id="completeBtn" class="btn btn-primary">작업 완료</button>
+      </div>
+    </div>
+  </main>
+  
+  <!-- 작업 완료 확인 모달 -->
+  <div id="completeModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>작업 완료 확인</h2>
+      <p>번역 감수 작업을 완료하시겠습니까? 완료 후 검토자가 검토할 수 있게 됩니다.</p>
+      <div class="form-group">
+        <label for="tagInput">태그 (선택사항)</label>
+        <input type="text" id="tagInput" placeholder="태그를 입력하세요 (쉼표로 구분)">
+      </div>
+      <div class="modal-buttons">
+        <button id="cancelComplete" class="btn">취소</button>
+        <button id="confirmComplete" class="btn btn-primary">확인</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- TODO: API 연결 예정 -->
+  <script src="translation.js"></script>
+</body>
+</html>

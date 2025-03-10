@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>대시보드 - 음성 파일 자막 편집 사이트</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+  <header>
+    <div class="logo">음성 파일 자막 편집 사이트</div>
+    <nav>
+      <ul>
+        <li><a href="dashboard.html" class="active">대시보드</a></li>
+        <li><a href="projects.html">프로젝트</a></li>
+        <li id="adminMenu" style="display: none;"><a href="admin.html">관리자</a></li>
+        <li><a href="#" id="logoutBtn">로그아웃</a></li>
+      </ul>
+    </nav>
+    <div class="user-info">
+      <span id="userName">사용자</span>
+      <span id="userRole">일반 감수자</span>
+    </div>
+  </header>
+  
+  <main>
+    <div class="dashboard-container">
+      <div class="dashboard-header">
+        <h1>대시보드</h1>
+        <button id="newProjectBtn" class="btn btn-primary">새 프로젝트</button>
+      </div>
+      
+      <div class="stats-container">
+        <div class="stat-card">
+          <h3>진행중인 프로젝트</h3>
+          <p class="stat-number" id="incompleteCount">0</p>
+        </div>
+        <div class="stat-card">
+          <h3>검토 대기중</h3>
+          <p class="stat-number" id="reviewingCount">0</p>
+        </div>
+        <div class="stat-card">
+          <h3>완료된 프로젝트</h3>
+          <p class="stat-number" id="completeCount">0</p>
+        </div>
+      </div>
+      
+      <div class="project-list-container">
+        <h2>내 프로젝트</h2>
+        <div class="search-container">
+          <input type="text" id="searchInput" placeholder="프로젝트 검색...">
+          <button id="searchBtn">검색</button>
+        </div>
+        <table class="project-table">
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>작업자</th>
+              <th>작업 음성파일</th>
+              <th>진행 상태</th>
+              <th>최근 저장 일자</th>
+              <th>작업</th>
+            </tr>
+          </thead>
+          <tbody id="projectList">
+            <!-- 프로젝트 목록이 JS에 의해 동적으로 로드됩니다 -->
+          </tbody>
+        </table>
+      </div>
+      
+      <div id="reviewingProjectsContainer" class="project-list-container" style="display: none;">
+        <h2>검토 대기 프로젝트</h2>
+        <table class="project-table">
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>작업자</th>
+              <th>작업 음성파일</th>
+              <th>최근 저장 일자</th>
+              <th>작업</th>
+            </tr>
+          </thead>
+          <tbody id="reviewingProjectList">
+            <!-- 검토 대기 프로젝트 목록이 JS에 의해 동적으로 로드됩니다 -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+  
+  <!-- 새 프로젝트 모달 -->
+  <div id="newProjectModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>새 프로젝트 생성</h2>
+      <form id="newProjectForm">
+        <div class="form-group">
+          <label for="projectName">프로젝트 이름</label>
+          <input type="text" id="projectName" name="projectName" required>
+        </div>
+        <div class="form-group">
+          <label for="audioFile">음성 파일 업로드 (MP3)</label>
+          <input type="file" id="audioFile" name="audioFile" accept=".mp3" required>
+        </div>
+        <button type="submit" class="btn btn-primary">프로젝트 생성</button>
+      </form>
+    </div>
+  </div>
+  
+  <!-- TODO: API 연결 예정 -->
+  <script src="dashboard.js"></script>
+</body>
+</html>

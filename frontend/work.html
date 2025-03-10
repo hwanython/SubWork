@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>전사 감수 - 음성 파일 자막 편집 사이트</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+  <header>
+    <div class="logo">음성 파일 자막 편집 사이트</div>
+    <nav>
+      <ul>
+        <li><a href="dashboard.html">대시보드</a></li>
+        <li><a href="projects.html">프로젝트</a></li>
+        <li id="adminMenu" style="display: none;"><a href="admin.html">관리자</a></li>
+        <li><a href="#" id="logoutBtn">로그아웃</a></li>
+      </ul>
+    </nav>
+    <div class="user-info">
+      <span id="userName">사용자</span>
+      <span id="userRole">일반 감수자</span>
+    </div>
+  </header>
+  
+  <main>
+    <div class="work-container">
+      <div class="work-header">
+        <h1 id="projectTitle">프로젝트 제목</h1>
+        <div class="project-status">
+          <span id="projectStatus">진행 중</span>
+        </div>
+      </div>
+      
+      <div class="audio-player">
+        <audio id="audioPlayer" controls>
+          <source id="audioSource" src="" type="audio/mpeg">
+          브라우저가 오디오 재생을 지원하지 않습니다.
+        </audio>
+        <div class="player-controls">
+          <button id="playBackward" class="control-btn">-5초</button>
+          <button id="playForward" class="control-btn">+5초</button>
+          <button id="slowDown" class="control-btn">0.8x</button>
+          <button id="speedUp" class="control-btn">1.2x</button>
+        </div>
+      </div>
+      
+      <div class="work-area">
+        <div class="transcription-container">
+          <h2>STT 전사 결과 (원본)</h2>
+          <div id="originalTranscription" class="transcription-area">
+            <!-- STT 결과가 JS에 의해 동적으로 로드됩니다 -->
+          </div>
+        </div>
+        
+        <div class="editing-container">
+          <h2>감수 영역</h2>
+          <div id="editableTranscription" class="transcription-area" contenteditable="true">
+            <!-- 편집 가능한 영역이 JS에 의해 동적으로 로드됩니다 -->
+          </div>
+        </div>
+      </div>
+      
+      <div class="action-buttons">
+        <button id="saveBtn" class="btn">저장</button>
+        <button id="completeBtn" class="btn btn-primary">작업 완료</button>
+      </div>
+    </div>
+  </main>
+  
+  <!-- 작업 완료 확인 모달 -->
+  <div id="completeModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>작업 완료 확인</h2>
+      <p>작업을 완료하면 번역 API가 호출되어 번역 작업이 진행됩니다. 작업을 완료하시겠습니까?</p>
+      <div class="form-group">
+        <label for="tagInput">태그 (선택사항)</label>
+        <input type="text" id="tagInput" placeholder="태그를 입력하세요 (쉼표로 구분)">
+      </div>
+      <div class="modal-buttons">
+        <button id="cancelComplete" class="btn">취소</button>
+        <button id="confirmComplete" class="btn btn-primary">확인</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- TODO: API 연결 예정 -->
+  <script src="work.js"></script>
+</body>
+</html>
