@@ -174,7 +174,7 @@ function loadProjects() {
       
       if (project.status === 'complete') {
         // 완료된 프로젝트는 읽기 전용으로 보기
-        alert('완료된 프로젝트입니다.');
+        window.location.href = `work.html?id=${projectId}&readonly=true`;
       } else if (project.status === 'reviewing') {
         // 검토 중인 프로젝트는 검토 페이지로 이동
         window.location.href = `review.html?id=${projectId}`;

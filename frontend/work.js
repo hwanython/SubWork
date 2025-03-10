@@ -128,19 +128,29 @@ function getRoleDisplayName(role) {
 
 // 프로젝트 데이터 로드 함수
 function loadProjectData(projectId) {
+  // URL에서 읽기 전용 모드 확인
+  const urlParams = new URLSearchParams(window.location.search);
+  const isReadOnly = urlParams.get('readonly') === 'true';
+  
   // TODO: API 연결 예정
   // 모의 프로젝트 데이터 (실제로는 서버에서 데이터를 가져와야 함)
   const mockProject = {
     id: projectId,
     title: '인터뷰 전사 프로젝트',
-    status: 'incomplete',
+    status: isReadOnly ? 'complete' : 'incomplete',
     audioUrl: 'https://example.com/audio/sample.mp3', // 실제 오디오 파일 경로로 대체 필요
+    audioFileName: 'interview_20230615.mp3',
+    audioDuration: '13:45',
     transcription: '안녕하세요. 오늘은 인공지능과 자연어 처리에 대해 이야기해 보겠습니다. 자연어 처리는 컴퓨터가 사람의 언어를 이해하고 생성할 수 있도록 하는 기술입니다. 최근에는 딥러닝의 발전으로 많은 발전이 있었습니다. 특히 트랜스포머 모델의 등장으로 번역, 요약, 질의응답 등 다양한 태스크에서 좋은 성능을 보이고 있습니다. 감사합니다.'
   };
   
   // 프로젝트 정보 표시
   document.getElementById('projectTitle').textContent = mockProject.title;
-  document.getElementById('projectStatus').textContent = '진행 중';
+  document.getElementById('projectStatus').textContent = isReadOnly ? '완료됨' : '진행 중';
+  
+  // 오디오 파일 정보 표시
+  document.getElementById('audioFileName').textContent = `파일명: ${mockProject.audioFileName}`;
+  document.getElementById('audioDuration').textContent = `재생 시간: ${mockProject.audioDuration}`;
   
   // 오디오 플레이어 설정
   // 참고: 실제 구현에서는 서버에서 오디오 파일 URL을 가져와야 함
@@ -150,16 +160,50 @@ function loadProjectData(projectId) {
   // 전사 결과 표시
   document.getElementById('originalTranscription').textContent = mockProject.transcription;
   
+  // URL에서 읽기 전용 모드 확인
+  const urlParams = new URLSearchParams(window.location.search);
+  const isReadOnly = urlParams.get('readonly') === 'true';
+  
   // 편집 영역에 초기 내용 설정
   const editableTranscription = document.getElementById('editableTranscription');
   
-  // 로컬 스토리지에서 저장된 편집 내용 확인
-  const savedContent = localStorage.getItem(`project_${projectId}_transcription`);
-  if (savedContent) {
-    editableTranscription.innerHTML = savedContent;
+  // 읽기 전용 모드일 경우 편집 불가능하게 설정
+  if (isReadOnly) {
+    editableTranscription.setAttribute('contenteditable', 'false');
+    editableTranscription.classList.add('readonly');
+    
+    // 버튼들 숨기기
+    document.getElementById('saveBtn').style.display = 'none';
+    document.getElementById('completeBtn').style.display = 'none';
+    
+    // 읽기 전용 알림 표시
+    const workHeader = document.querySelector('.work-header');
+    const readOnlyNotice = document.createElement('div');
+    readOnlyNotice.className = 'readonly-notice';
+    readOnlyNotice.textContent = '이 프로젝트는 이미 완료되어 읽기 전용으로 볼 수 있습니다.';
+    workHeader.appendChild(readOnlyNotice);
+  }
+  
+  // 로컬 스토리지에서 저장된 편집 내용 확인 (읽기 전용이 아닐 경우에만)
+  if (!isReadOnly) {
+    const savedContent = localStorage.getItem(`project_${projectId}_transcription`);
+    if (savedContent) {
+      editableTranscription.innerHTML = savedContent;
+    } else {
+      editableTranscription.textContent = mockProject.transcription;
+    }
   } else {
+    // 읽기 전용일 경우 서버에서 완료된 데이터 로드 (모의 데이터)
     editableTranscription.textContent = mockProject.transcription;
   }
+  
+  // 오디오 플레이어 로드 이벤트 (실제 오디오 파일이 로드되면 정확한 길이 표시)
+  document.getElementById('audioPlayer').addEventListener('loadedmetadata', function() {
+    const duration = this.duration;
+    const minutes = Math.floor(duration / 60);
+    const seconds = Math.floor(duration % 60);
+    document.getElementById('audioDuration').textContent = `재생 시간: ${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+  });
 }
 
 // 프로젝트 저장 함수
